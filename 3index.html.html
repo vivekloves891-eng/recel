@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KV — Exclusivity Redefined</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= ROOT ================= */
+
+:root{
+  --black:#0B0B0B;
+  --gold:#D4AF37;
+  --ivory:#F5F5F0;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Playfair Display',serif;
+}
+
+body{
+  background:var(--black);
+  color:var(--ivory);
+  overflow-x:hidden;
+}
+
+section{
+  padding:100px 8%;
+  min-height:100vh;
+}
+
+.gold{ color:var(--gold); }
+
+/* ================= NAV ================= */
+
+nav{
+  position:fixed;
+  width:100%;
+  padding:20px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.9);
+  backdrop-filter:blur(10px);
+  z-index:1000;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:800;
+  color:var(--gold);
+  letter-spacing:4px;
+}
+
+nav ul{
+  display:flex;
+  list-style:none;
+  gap:40px;
+  align-items:center;
+}
+
+nav a{
+  text-decoration:none;
+  color:var(--ivory);
+  transition:0.3s;
+}
+
+nav a:hover{
+  color:var(--gold);
+}
+
+.cart-icon{
+  cursor:pointer;
+  position:relative;
+}
+
+.cart-count{
+  position:absolute;
+  top:-8px;
+  right:-10px;
+  background:var(--gold);
+  color:var(--black);
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:50%;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
+  url("https://images.unsplash.com/photo-1519741497674-611481863552") center/cover;
+}
+
+.hero h1{
+  font-size:80px;
+  text-shadow:0 0 25px rgba(212,175,55,0.6);
+}
+
+.hero p{
+  margin-top:20px;
+  font-size:22px;
+  letter-spacing:4px;
+  color:var(--gold);
+}
+
+/* ================= PRODUCTS ================= */
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+  margin-top:50px;
+}
+
+.product{
+  background:#111;
+  transition:0.4s;
+  padding-bottom:20px;
+}
+
+.product img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+
+.product-info{
+  padding:15px;
+  text-align:center;
+}
+
+.product button{
+  margin-top:10px;
+  padding:8px 20px;
+  border:1px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.product button:hover{
+  background:var(--gold);
+  color:var(--black);
+}
+
+.product:hover{
+  transform:translateY(-8px);
+  box-shadow:0 0 15px rgba(212,175,55,0.3);
+}
+
+/* ================= CART PANEL ================= */
+
+.cart-panel{
+  position:fixed;
+  top:0;
+  right:-400px;
+  width:400px;
+  height:100%;
+  background:#111;
+  padding:30px;
+  transition:0.4s;
+  z-index:2000;
+  overflow-y:auto;
+}
+
+.cart-panel.active{
+  right:0;
+}
+
+.cart-item{
+  margin-bottom:20px;
+  border-bottom:1px solid #222;
+  padding-bottom:10px;
+}
+
+.checkout-btn{
+  margin-top:20px;
+  width:100%;
+  padding:12px;
+  background:var(--gold);
+  border:none;
+  cursor:pointer;
+  color:var(--black);
+  font-weight:bold;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:3000;
+}
+
+.modal-content{
+  background:#111;
+  padding:40px;
+  width:350px;
+  text-align:center;
+}
+
+.modal input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  background:#000;
+  border:1px solid #333;
+  color:white;
+}
+
+.modal button{
+  padding:10px 20px;
+  background:var(--gold);
+  border:none;
+  cursor:pointer;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  text-align:center;
+  padding:40px;
+  background:#000;
+  color:#666;
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">KV</div>
+  <ul>
+    <li><a href="#products">Collection</a></li>
+    <li><a href="#" onclick="openVIP()">VIP</a></li>
+    <li class="cart-icon" onclick="toggleCart()">🛒
+      <span class="cart-count" id="cartCount">0</span>
+    </li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div>
+    <h1>KV</h1>
+    <p>Exclusivity Redefined</p>
+  </div>
+</section>
+
+<section id="products">
+  <h2 class="gold">Signature Collection</h2>
+  <div class="product-grid" id="grid"></div>
+</section>
+
+<!-- CART PANEL -->
+<div class="cart-panel" id="cartPanel">
+  <h2 class="gold">Your Selection</h2>
+  <div id="cartItems"></div>
+  <h3>Total: $<span id="total">0</span></h3>
+  <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+</div>
+
+<!-- VIP MODAL -->
+<div class="modal" id="vipModal">
+  <div class="modal-content">
+    <h3 class="gold">KV Black Card Login</h3>
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button onclick="closeVIP()">Enter</button>
+  </div>
+</div>
+
+<footer>
+  © 2026 KV — Exclusivity Redefined
+</footer>
+
+<script>
+
+/* ================= PRODUCTS ================= */
+
+const grid=document.getElementById("grid");
+const cartItemsEl=document.getElementById("cartItems");
+const cartCount=document.getElementById("cartCount");
+const totalEl=document.getElementById("total");
+
+let cart=[];
+let total=0;
+
+for(let i=1;i<=100;i++){
+  const price=(500+i*3);
+  const product=document.createElement("div");
+  product.className="product";
+  product.innerHTML=`
+    <img src="https://picsum.photos/400/300?random=${i}">
+    <div class="product-info">
+      <h4>KV Signature ${i}</h4>
+      <p class="gold">$${price}</p>
+      <button onclick="addToCart(${price}, 'KV Signature ${i}')">Add</button>
+    </div>
+  `;
+  grid.appendChild(product);
+}
+
+/* ================= CART ================= */
+
+function addToCart(price,name){
+  cart.push({price,name});
+  total+=price;
+  renderCart();
+}
+
+function renderCart(){
+  cartItemsEl.innerHTML="";
+  cart.forEach(item=>{
+    const div=document.createElement("div");
+    div.className="cart-item";
+    div.innerHTML=`<p>${item.name}</p><p>$${item.price}</p>`;
+    cartItemsEl.appendChild(div);
+  });
+  cartCount.innerText=cart.length;
+  totalEl.innerText=total;
+}
+
+function toggleCart(){
+  document.getElementById("cartPanel").classList.toggle("active");
+}
+
+function checkout(){
+  alert("Luxury Checkout Coming Soon.");
+}
+
+/* ================= VIP ================= */
+
+function openVIP(){
+  document.getElementById("vipModal").style.display="flex";
+}
+
+function closeVIP(){
+  document.getElementById("vipModal").style.display="none";
+}
+
+</script>
+
+</body>
+</html>

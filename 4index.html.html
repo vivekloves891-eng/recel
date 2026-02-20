@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KV Empire Control — Exclusivity Redefined</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --black:#0B0B0B;
+  --gold:#D4AF37;
+  --ivory:#F5F5F0;
+  --panel:#111;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Playfair Display',serif;
+}
+
+body{
+  background:var(--black);
+  color:var(--ivory);
+}
+
+nav{
+  padding:20px 8%;
+  display:flex;
+  justify-content:space-between;
+  background:#000;
+  border-bottom:1px solid #222;
+}
+
+.logo{
+  color:var(--gold);
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:4px;
+}
+
+nav button{
+  padding:8px 20px;
+  background:transparent;
+  border:1px solid var(--gold);
+  color:var(--gold);
+  cursor:pointer;
+}
+
+section{
+  padding:80px 8%;
+}
+
+/* ================= DASHBOARD ================= */
+
+.dashboard{
+  display:grid;
+  grid-template-columns:250px 1fr;
+  gap:40px;
+}
+
+.sidebar{
+  background:var(--panel);
+  padding:30px;
+  border:1px solid #222;
+}
+
+.sidebar h3{
+  color:var(--gold);
+  margin-bottom:20px;
+}
+
+.sidebar button{
+  display:block;
+  margin:10px 0;
+  width:100%;
+  padding:10px;
+  background:#000;
+  border:1px solid #222;
+  color:white;
+  cursor:pointer;
+}
+
+.panel{
+  background:var(--panel);
+  padding:30px;
+  border:1px solid #222;
+  min-height:500px;
+}
+
+.metric{
+  display:inline-block;
+  margin:20px;
+  padding:20px;
+  background:#000;
+  border:1px solid var(--gold);
+  min-width:150px;
+  text-align:center;
+}
+
+.gold{color:var(--gold);}
+
+/* ================= PRODUCTS ================= */
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+  margin-top:30px;
+}
+
+.product{
+  background:#000;
+  padding:15px;
+  border:1px solid #222;
+  text-align:center;
+}
+
+.product img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+
+.product button{
+  margin-top:10px;
+  padding:5px 15px;
+  border:1px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  cursor:pointer;
+}
+
+/* ================= AI ASSISTANT ================= */
+
+.ai-box{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:300px;
+  background:#111;
+  border:1px solid var(--gold);
+  padding:15px;
+}
+
+.ai-messages{
+  height:150px;
+  overflow-y:auto;
+  font-size:14px;
+  margin-bottom:10px;
+}
+
+.ai-box input{
+  width:100%;
+  padding:5px;
+  background:#000;
+  border:1px solid #333;
+  color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">KV EMPIRE</div>
+  <div>
+    <button onclick="setRole('guest')">Guest</button>
+    <button onclick="setRole('vip')">VIP</button>
+    <button onclick="setRole('admin')">Admin</button>
+  </div>
+</nav>
+
+<section class="dashboard">
+  <div class="sidebar">
+    <h3>Control Center</h3>
+    <button onclick="showPanel('overview')">Overview</button>
+    <button onclick="showPanel('products')">Products</button>
+    <button onclick="showPanel('investor')">Investor</button>
+  </div>
+
+  <div class="panel" id="panelContent">
+    <h2 class="gold">Empire Overview</h2>
+    <div>
+      <div class="metric">
+        <h3 id="sales">$0</h3>
+        <p>Total Sales</p>
+      </div>
+      <div class="metric">
+        <h3 id="orders">0</h3>
+        <p>Orders</p>
+      </div>
+      <div class="metric">
+        <h3 id="members">0</h3>
+        <p>VIP Members</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI Assistant -->
+<div class="ai-box">
+  <div class="ai-messages" id="aiMessages">
+    <p><span class="gold">KV AI:</span> Welcome to the Empire.</p>
+  </div>
+  <input type="text" placeholder="Ask about products..." onkeydown="if(event.key==='Enter')askAI(this.value)">
+</div>
+
+<script>
+
+/* ================= ROLE ================= */
+
+let role="guest";
+function setRole(r){
+  role=r;
+  alert("Role set to "+r.toUpperCase());
+}
+
+/* ================= PANEL SWITCH ================= */
+
+function showPanel(type){
+  const panel=document.getElementById("panelContent");
+
+  if(type==="overview"){
+    panel.innerHTML=`
+      <h2 class="gold">Empire Overview</h2>
+      <div>
+        <div class="metric"><h3 id="sales">$${totalSales}</h3><p>Total Sales</p></div>
+        <div class="metric"><h3>${orders}</h3><p>Orders</p></div>
+        <div class="metric"><h3>${vipMembers}</h3><p>VIP Members</p></div>
+      </div>`;
+  }
+
+  if(type==="products"){
+    panel.innerHTML=`<h2 class="gold">Product Management</h2>
+    <div class="product-grid" id="productGrid"></div>`;
+    loadProducts();
+  }
+
+  if(type==="investor"){
+    panel.innerHTML=`
+    <h2 class="gold">Investor Analytics</h2>
+    <div class="metric"><h3>$5.2M</h3><p>Projected Revenue</p></div>
+    <div class="metric"><h3>34%</h3><p>Growth</p></div>
+    <div class="metric"><h3>Ultra High Net Worth</h3><p>Target Market</p></div>`;
+  }
+}
+
+/* ================= PRODUCTS ================= */
+
+let totalSales=5200000;
+let orders=348;
+let vipMembers=112;
+
+function loadProducts(){
+  const grid=document.getElementById("productGrid");
+  for(let i=1;i<=20;i++){
+    const product=document.createElement("div");
+    product.className="product";
+    product.innerHTML=`
+      <img src="https://picsum.photos/300/200?random=${i}">
+      <h4>KV Elite ${i}</h4>
+      <button onclick="simulateSale()">Simulate Sale</button>
+    `;
+    grid.appendChild(product);
+  }
+}
+
+function simulateSale(){
+  totalSales+=5000;
+  orders++;
+  document.getElementById("sales").innerText="$"+totalSales;
+  document.getElementById("orders").innerText=orders;
+}
+
+/* ================= AI ASSISTANT ================= */
+
+function askAI(message){
+  const box=document.getElementById("aiMessages");
+  box.innerHTML+=`<p><b>You:</b> ${message}</p>`;
+  
+  let response="Our Founders Collection is extremely exclusive.";
+  if(message.toLowerCase().includes("vip")){
+    response="VIP Black Card grants private concierge and early drops.";
+  }
+  if(message.toLowerCase().includes("price")){
+    response="Prices range from $500 to $50,000 depending on exclusivity.";
+  }
+
+  box.innerHTML+=`<p><span class="gold">KV AI:</span> ${response}</p>`;
+  box.scrollTop=box.scrollHeight;
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KV — Exclusivity Redefined</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===========================
+   KV ULTRA EMPIRE STYLES
+=========================== */
+
+:root{
+  --black:#0B0B0B;
+  --gold:#D4AF37;
+  --ivory:#F5F5F0;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Playfair Display',serif;
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--black);
+  color:var(--ivory);
+  overflow-x:hidden;
+}
+
+section{
+  padding:120px 8%;
+  min-height:100vh;
+  position:relative;
+}
+
+h1,h2,h3{
+  letter-spacing:3px;
+}
+
+.gold{
+  color:var(--gold);
+}
+
+/* ================= NAVBAR ================= */
+
+nav{
+  position:fixed;
+  width:100%;
+  padding:20px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(15px);
+  z-index:999;
+}
+
+nav .logo{
+  font-size:28px;
+  font-weight:800;
+  color:var(--gold);
+  letter-spacing:5px;
+}
+
+nav ul{
+  display:flex;
+  list-style:none;
+  gap:40px;
+}
+
+nav a{
+  color:var(--ivory);
+  text-decoration:none;
+  transition:0.4s;
+}
+
+nav a:hover{
+  color:var(--gold);
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+}
+
+.hero video{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  top:0;
+  left:0;
+  z-index:-2;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.65);
+  z-index:-1;
+}
+
+.hero h1{
+  font-size:90px;
+  text-shadow:0 0 20px rgba(212,175,55,0.6);
+}
+
+.hero p{
+  margin-top:20px;
+  font-size:22px;
+  letter-spacing:5px;
+  color:var(--gold);
+}
+
+.btn{
+  margin-top:40px;
+  padding:14px 40px;
+  border:1px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  cursor:pointer;
+  transition:0.4s;
+}
+
+.btn:hover{
+  background:var(--gold);
+  color:var(--black);
+  box-shadow:0 0 20px var(--gold);
+}
+
+/* ================= ABOUT ================= */
+
+.about{
+  max-width:900px;
+}
+
+.about p{
+  margin-top:20px;
+  line-height:1.9;
+  color:#ddd;
+}
+
+/* ================= COLLECTIONS ================= */
+
+.collection-grid{
+  margin-top:60px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:40px;
+}
+
+.collection-card{
+  padding:50px;
+  background:#111;
+  border:1px solid #222;
+  transition:0.5s;
+  position:relative;
+}
+
+.collection-card:hover{
+  border-color:var(--gold);
+  transform:translateY(-15px);
+}
+
+.collection-card::before{
+  content:"KV";
+  position:absolute;
+  font-size:120px;
+  color:rgba(212,175,55,0.05);
+  top:20px;
+  right:20px;
+}
+
+/* ================= PRODUCTS ================= */
+
+.product-grid{
+  margin-top:60px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:25px;
+}
+
+.product{
+  background:#111;
+  overflow:hidden;
+  transition:0.5s;
+  position:relative;
+}
+
+.product img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  transition:0.5s;
+}
+
+.product:hover img{
+  transform:scale(1.1);
+}
+
+.product-info{
+  padding:20px;
+  text-align:center;
+}
+
+.product:hover{
+  border:1px solid var(--gold);
+  box-shadow:0 0 20px rgba(212,175,55,0.3);
+}
+
+/* ================= VIP ================= */
+
+.vip{
+  text-align:center;
+  background:linear-gradient(to right,#000,#111);
+}
+
+.black-card{
+  margin-top:50px;
+  display:inline-block;
+  padding:60px;
+  border:2px solid var(--gold);
+  position:relative;
+}
+
+.black-card::before{
+  content:"KV BLACK CARD";
+  position:absolute;
+  top:-15px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--black);
+  padding:0 20px;
+  color:var(--gold);
+  font-size:14px;
+  letter-spacing:3px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  text-align:center;
+  padding:40px;
+  background:#000;
+  color:#666;
+}
+
+/* ================= ANIMATION ================= */
+
+.fade-in{
+  opacity:0;
+  transform:translateY(30px);
+  transition:1s;
+}
+
+.fade-in.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(max-width:768px){
+  .hero h1{
+    font-size:45px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">KV</div>
+  <ul>
+    <li><a href="#about">Philosophy</a></li>
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#vip">VIP</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <video autoplay muted loop>
+    <source src="https://cdn.coverr.co/videos/coverr-luxury-watches-8514/1080p.mp4" type="video/mp4">
+  </video>
+  <div>
+    <h1>KV</h1>
+    <p>Exclusivity Redefined</p>
+    <button class="btn" onclick="scrollToSection('collections')">Enter The Empire</button>
+  </div>
+</section>
+
+<section id="about" class="fade-in">
+  <h2 class="gold">Brand Philosophy</h2>
+  <div class="about">
+    <p>KV represents Western heritage fused with modern sophistication. Our creations are meticulously handcrafted for a selective clientele who understand true exclusivity.</p>
+    <p>Craftsmanship. Heritage. Power. This is not fashion — it is legacy.</p>
+  </div>
+</section>
+
+<section id="collections" class="fade-in">
+  <h2 class="gold">Launch Collections</h2>
+  <div class="collection-grid">
+    <div class="collection-card">
+      <h3>Founders Collection</h3>
+      <p>100 signature embossed monogram pieces.</p>
+    </div>
+    <div class="collection-card">
+      <h3>Seasonal Collection</h3>
+      <p>Limited numbered releases per season.</p>
+    </div>
+    <div class="collection-card">
+      <h3>Heritage Line</h3>
+      <p>Western aesthetics meets modern luxury.</p>
+    </div>
+  </div>
+</section>
+
+<section id="products" class="fade-in">
+  <h2 class="gold">Signature Products</h2>
+  <div class="product-grid" id="productsGrid"></div>
+</section>
+
+<section id="vip" class="vip fade-in">
+  <h2 class="gold">KV Black Card</h2>
+  <div class="black-card">
+    <h3>Invitation Only</h3>
+    <p>Private concierge. Early drops. Bespoke customization.</p>
+    <button class="btn">Request Invitation</button>
+  </div>
+</section>
+
+<footer>
+  © 2026 KV — Exclusivity Redefined
+</footer>
+
+<script>
+
+/* Smooth Scroll */
+function scrollToSection(id){
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+/* Dynamic 100 Products */
+const grid=document.getElementById("productsGrid");
+for(let i=1;i<=100;i++){
+  let product=document.createElement("div");
+  product.className="product";
+  product.innerHTML=`
+    <img src="https://picsum.photos/500/400?random=${i}">
+    <div class="product-info">
+      <h4>KV Signature ${i}</h4>
+      <p class="gold">Limited Edition</p>
+    </div>
+  `;
+  grid.appendChild(product);
+}
+
+/* Scroll Animation */
+const faders=document.querySelectorAll(".fade-in");
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+    }
+  });
+});
+faders.forEach(el=>observer.observe(el));
+
+</script>
+
+</body>
+</html>
